@@ -1,0 +1,26 @@
+[
+    {
+        "id": "case_001",
+        "input": "I have a question about my latest invoice. There seems to be a discrepancy in the charges listed. Could you please clarify the details for me?",
+        "expected_category": "billing",
+        "expected_summary": "The customer is asking about an invoice discrepancy and wants clarification on the charges.",
+        "difficulty": "easy",
+        "notes": "The customer wants an explanation for the invoice discrepancy."
+    },
+    {
+        "id": "case_002",
+        "input": "I'm experiencing issues with my internet connection. It keeps dropping intermittently, and I'm unable to complete my work. Can you assist me in resolving this problem?",
+        "expected_category": "technical",
+        "expected_summary": "The customer is facing intermittent internet connection issues and seeks assistance to resolve the problem.",
+        "difficulty": "medium",
+        "notes": "The input describes a technical issue that may require troubleshooting steps."
+    },
+    {
+        "id": "case_003",
+        "input": "I would like to request a refund for the product I purchased last week. It arrived damaged and is not functioning as expected. What is the process for returning it?",
+        "expected_category": "billing",
+        "expected_summary": "The customer requests a refund for a damaged product and inquires about the return process.",
+        "difficulty": "medium",
+        "notes": "The input involves a return and refund request due to a defective product."
+    }
+]
