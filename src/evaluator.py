@@ -38,6 +38,9 @@ for test_case in test_cases:
         print("Pass")
     else:
         print("Fail")
+        print("Case ID:", test_case.id)
+        print("Expected category:", test_case.expected_category)
+        print("Predicted category:", prediction.category)
     evaluation_result = EvalResult(
         case_id = test_case.id,
         expected_category = test_case.expected_category,
