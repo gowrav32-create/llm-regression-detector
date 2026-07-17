@@ -38,5 +38,14 @@
         "expected_summary": "The customer is seeking general information about support hours and service details.",
         "difficulty": "easy",
         "notes": "This is a general inquiry requesting basic information rather than a technical, billing, or account issue."
+    },
+    {
+        "id": "case_006",
+        "input": "Subject: Unable to log in and reporting an unexpected charge\n\nHello,\n\nI'm unable to log in to my account. Each time I try to sign in I receive an 'incorrect password' message, and password reset attempts have not restored access. This prevents me from viewing billing and subscription details.\n\nI also noticed an unexpected charge of $49.99 on my credit card from your company dated July 15th. I did not authorize this charge and would like you to investigate and refund it if it was applied in error.\n\nPlease prioritize restoring my account access so I can review the charge; if that isn't possible, provide an alternative way to verify my billing activity and investigate the unexpected charge.\n\nThanks,\nJane Doe",
+        "expected_category": "account",
+        "expected_summary": "Primary: customer cannot log in to their account and requests assistance to regain access; secondary: customer reports an unexpected $49.99 charge and asks for investigation and refund.",
+        "difficulty": "hard",
+        "notes": "Account/login problem is the primary concern (blocking access to billing); also reports a potential unauthorized $49.99 charge that should be investigated."
     }
 ]
+       
