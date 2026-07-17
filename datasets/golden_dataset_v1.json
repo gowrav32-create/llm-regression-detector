@@ -22,5 +22,21 @@
         "expected_summary": "The customer requests a refund for a damaged product and inquires about the return process.",
         "difficulty": "medium",
         "notes": "The input involves a return and refund request due to a defective product."
+    },
+    {
+        "id": "case_004",
+        "input": "I need help updating my account email and security settings because I can't access certain features. Can you assist me with changing my account details?",
+        "expected_category": "account",
+        "expected_summary": "The customer is requesting assistance with updating account email and security settings to regain access to account features.",
+        "difficulty": "medium",
+        "notes": "The input is related to account management and updating personal account details."
+    },
+    {
+        "id": "case_005",
+        "input": "I just want to know what the standard support hours are and where I can find general information about your services.",
+        "expected_category": "general",
+        "expected_summary": "The customer is seeking general information about support hours and service details.",
+        "difficulty": "easy",
+        "notes": "This is a general inquiry requesting basic information rather than a technical, billing, or account issue."
     }
 ]
