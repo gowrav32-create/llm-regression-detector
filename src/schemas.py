@@ -1,4 +1,7 @@
 from pydantic import BaseModel
+from typing import Literal, Annotated
+
+Category = Literal["billing", "technical", "account", "general"]
 
 
 # PromptConfig needs:
@@ -8,23 +11,23 @@ from pydantic import BaseModel
 # 4. system_prompt
 
 # GoldenTestCase needs:
-# 1. id - str
-# 2. input - str
-# 3. expected_category - str
-# 4. expected_summary - str
-# 5. difficulty - str
-# 6. notes - str
+# 1. id - Category
+# 2. input - Category
+# 3. expected_category - Category
+# 4. expected_summary - Category
+# 5. difficulty - Category
+# 6. notes - Category
 
 # LLMOutput needs:
-# 1. category - str
-# 2. summary - str
+# 1. category - Category
+# 2. summary - Category
 
 # EvalResult needs:
-# 1. case_id - str
-# 2. expected_category - str
-# 3. predicted_category - str
+# 1. case_id - Category
+# 2. expected_category - Category
+# 3. predicted_category - Category
 # 4. category_match - bool
-# 5. predicted_summary - str
+# 5. predicted_summary - Category
 
 
 class PromptConfig(BaseModel):
@@ -37,20 +40,20 @@ class PromptConfig(BaseModel):
 class GoldenTestCase(BaseModel):
     id: str
     input: str
-    expected_category: str
+    expected_category: Category
     expected_summary: str
     difficulty: str
     notes: str
 
 
 class LLMOutput(BaseModel):
-    category: str
+    category: Category
     summary: str
 
 
 class EvalResult(BaseModel):
     case_id: str
-    expected_category: str
-    predicted_category: str
+    expected_category: Category
+    predicted_category: Category
     category_match: bool
     predicted_summary: str
