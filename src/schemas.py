@@ -15,11 +15,17 @@ from pydantic import BaseModel
 # 5. difficulty - str
 # 6. notes - str
 
+# LLMOutput needs:
+# 1. category - str
+# 2. summary - str
+
+
 class PromptConfig(BaseModel):
     version: str
     feature_name: str
     categories: dict[str, str]
     system_prompt: str
+    
 
 class GoldenTestCase(BaseModel):
     id: str
@@ -28,3 +34,8 @@ class GoldenTestCase(BaseModel):
     expected_summary: str
     difficulty: str
     notes: str
+
+
+class LLMOutput(BaseModel):
+    category: str
+    summary: str
