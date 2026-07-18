@@ -25,7 +25,7 @@ from schemas import LLMOutput
 # 4. "security"
 # 5. "profile"
 
-def classify_email(email_text: str) -> LLMOutput:
+def classify_email_baseline(email_text: str) -> LLMOutput:
     normalized_email = email_text.lower()
 
     billing_keywords = ["invoice", "payment", "billing", "charge", "refund"]
@@ -60,3 +60,7 @@ def classify_email(email_text: str) -> LLMOutput:
         category="general",
         summary="The customer is requesting help with an order."
     )
+
+
+def classify_email(email_text: str) -> LLMOutput:
+    return classify_email_baseline(email_text)
