@@ -1,3 +1,4 @@
+from ollama import chat
 from schemas import LLMOutput
 
 # Step 1: Convert the email text to lowercase
@@ -62,5 +63,33 @@ def classify_email_baseline(email_text: str) -> LLMOutput:
     )
 
 
+def classify_email_ollama(
+    email_text: str,
+    system_prompt: str
+) -> LLMOutput:
+    response = chat(
+        model="llama3.2:3b",
+        messages=[
+            {
+                "role": "system",
+                "content": system_prompt
+            },
+            {
+                "role": "user",
+                "content": email_text
+            }
+        ],
+        format=LLMOutput.model_json_schema(),
+        options={
+            "temperature": 0
+        }
+    )
+
+    return LLMOutput.model_validate_json(
+        response.message.content
+    )
+
+
 def classify_email(email_text: str) -> LLMOutput:
     return classify_email_baseline(email_text)
+
