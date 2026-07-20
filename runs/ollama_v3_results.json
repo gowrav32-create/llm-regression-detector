@@ -1,0 +1,13 @@
+{
+  "prompt_version": "v3",
+  "model": "llama3.2:3b",
+  "total_cases": 6,
+  "passed_cases": 6,
+  "pass_rate": 100.0,
+  "comparison_to_previous": {
+    "previous_prompt_version": "v2",
+    "previous_pass_rate": 66.67,
+    "status": "improved"
+  },
+  "failed_cases": []
+}

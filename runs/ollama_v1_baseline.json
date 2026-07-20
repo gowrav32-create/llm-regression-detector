@@ -1,19 +1,19 @@
 {
     "prompt_version": "v1",
-    "model": "llama3.2:3b:",
-    "total_cases": 0,
-    "passed_cases": 0,
-    "pass_rate": 0.0,
+    "model": "llama3.2:3b",
+    "total_cases": 6,
+    "passed_cases": 4,
+    "pass_rate": 66.67,
     "failed_cases": [
         {
-            "case_id": "",
-            "expected_category": "",
-            "predicted_category": ""
+            "case_id": "case_004",
+            "expected_category": "billing",
+            "predicted_category": "account"
         },
         {
-            "case_id": "",
-            "expected_category": "",
-            "predicted_category": ""
+            "case_id": "case_006",
+            "expected_category": "account",
+            "predicted_category": "technical"
         }
     ]
 }

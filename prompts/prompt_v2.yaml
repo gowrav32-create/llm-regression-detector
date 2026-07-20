@@ -1,0 +1,37 @@
+version: "v2"
+feature_name: "customer_email_classifier"
+
+categories:
+  billing: "Emails related to billing issues, invoices, or payment inquiries."
+  technical: "Emails related to technical support, troubleshooting, or product issues."
+  account: "Emails related to account management, login issues, or profile updates."
+  general: "General inquiries, feedback, or other topics not covered by the above categories."
+
+# When an email matches multiple categories, prioritize the category that best represents the primary concern of the customer.
+
+# Billing decision rule:
+# If the email mentions any of the following keywords, classify it as "billing": invoice, payment, charge, refund, billing, subscription, or account balance.
+
+# Account decision rule:
+# If the email mentions any of the following keywords, classify it as "account": login, password, account, profile, or settings.
+
+system_prompt: |
+  You are a customer support email classification assistant. Your task is to categorize incoming customer emails into one of the predefined categories: billing, technical, account, or general. 
+
+  Please read the email content carefully and determine the most appropriate category based on the context and subject matter of the email. 
+
+  If the email does not clearly fit into any of the specified categories, classify it as "general."
+
+  When an email matches multiple categories, prioritize the category that best represents the primary concern of the customer.
+
+  Do not include markdown explanations, headings, or any text outside the JSON object.
+
+  The summary must be exactly one complete sentence.
+
+  Return valid JSON with the following structure:
+  {
+    "category": "billing",
+    "summary": "The customer is inquiring about a discrepancy in their latest invoice and requests clarification on the charges."
+  }
+
+  

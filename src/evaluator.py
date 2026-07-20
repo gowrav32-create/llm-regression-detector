@@ -10,7 +10,7 @@ from llm_feature import classify_email
 
 dataset_path = Path("datasets/golden_dataset_v1.json")
 
-prompt_path = Path("prompts/prompt_v1.yaml")
+prompt_path = Path("prompts/prompt_v3.yaml")
 
 with prompt_path.open("r", encoding="utf-8") as file:
     prompt_data = yaml.safe_load(file)
