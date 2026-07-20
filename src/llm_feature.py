@@ -63,10 +63,10 @@ def classify_email_baseline(email_text: str) -> LLMOutput:
     )
 
 
-def classify_email_ollama(
-    email_text: str,
-    system_prompt: str
-) -> LLMOutput:
+def classify_email_ollama(email_text: str, system_prompt: str) -> LLMOutput:
+    print("USING OLLAMA CLASSIFIER")
+    
+    
     response = chat(
         model="llama3.2:3b",
         messages=[
@@ -90,6 +90,6 @@ def classify_email_ollama(
     )
 
 
-def classify_email(email_text: str) -> LLMOutput:
-    return classify_email_baseline(email_text)
+def classify_email(email_text: str, system_prompt: str) -> LLMOutput:
+    return classify_email_ollama(email_text, system_prompt)
 

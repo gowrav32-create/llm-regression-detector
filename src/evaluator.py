@@ -32,7 +32,7 @@ print(f"Loaded {len(test_cases)} test cases")
 for test_case in test_cases:
     print(test_case.id, test_case.expected_category)
 
-    prediction = classify_email(test_case.input)
+    prediction = classify_email(test_case.input, prompt_config.system_prompt)
     category_match = prediction.category == test_case.expected_category
     if category_match:
         print("Pass")
