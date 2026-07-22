@@ -1,5 +1,7 @@
 import json
 
+import argparse
+
 from datetime import datetime
 
 from pathlib import Path
@@ -12,7 +14,19 @@ from llm_feature import classify_email
 
 dataset_path = Path("datasets/golden_dataset_v1.json")
 
-prompt_path = Path("prompts/prompt_v3.yaml")
+parser = argparse.ArgumentParser(
+    description="Evaluate an LLM prompt against the golden dataset."
+)
+
+parser.add_argument(
+    "--prompt",
+    default="prompts/prompt_v3.yaml",
+    help="Path to the prompt YAML file."
+)
+
+args = parser.parse_args()
+
+prompt_path = Path(args.prompt)
 
 with prompt_path.open("r", encoding="utf-8") as file:
     prompt_data = yaml.safe_load(file)
