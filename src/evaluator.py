@@ -4,6 +4,8 @@ import json
 
 import argparse
 
+from regression import calculate_regression
+
 from datetime import datetime
 
 from pathlib import Path
@@ -111,17 +113,18 @@ total_count = len(results)
 pass_rate = (passed_count / total_count) * 100
 
 previous_pass_rate = None
-pass_rate_change = None
-regression_detected = False
+
 
 if previous_report_path:
     with previous_report_path.open("r", encoding="utf-8") as file:
         previous_report_data = json.load(file)
 
-    
     previous_pass_rate = previous_report_data["pass_rate"]
-    pass_rate_change = round(pass_rate - previous_pass_rate, 2)
-    regression_detected = pass_rate_change < 0
+    
+pass_rate_change, regression_detected = calculate_regression(
+    current_pass_rate=pass_rate,
+    previous_pass_rate=previous_pass_rate
+)
 
 report_data = {
     "timestamp": timestamp,
