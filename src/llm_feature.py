@@ -1,5 +1,5 @@
 from ollama import chat
-from schemas import LLMOutput
+from .schemas import LLMOutput
 
 # Step 1: Convert the email text to lowercase
 # Step 2: Look for words associated with each category

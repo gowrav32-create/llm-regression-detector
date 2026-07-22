@@ -4,7 +4,7 @@ import json
 
 import argparse
 
-from regression import calculate_regression
+from .regression import calculate_regression
 
 from datetime import datetime
 
@@ -12,9 +12,9 @@ from pathlib import Path
 
 import yaml
 
-from schemas import EvalResult, GoldenTestCase, PromptConfig
+from .schemas import EvalResult, GoldenTestCase, PromptConfig
 
-from llm_feature import classify_email
+from .llm_feature import classify_email
 
 dataset_path = Path("datasets/golden_dataset_v1.json")
 
