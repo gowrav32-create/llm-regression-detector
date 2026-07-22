@@ -104,34 +104,34 @@ def main():
         for case in dataset_data
     ]
 
-    results = []
 
     print(f"Loaded {len(test_cases)} test cases")
 
-    for test_case in test_cases:
-        print(test_case.id, test_case.expected_category)
+    
+    results = evaluate_cases(
+        test_cases=test_cases,
+        system_prompt=prompt_config.system_prompt,
+        classifier=classify_email
+    )
 
-        prediction = classify_email(test_case.input, prompt_config.system_prompt)
-        category_match = prediction.category == test_case.expected_category
-        if category_match:
+    for result in results:
+        print(result.case_id, result.expected_category)
+
+        if result.category_match:
             print("Pass")
         else:
             print("Fail")
-            print("Case ID:", test_case.id)
-            print("Expected category:", test_case.expected_category)
-            print("Predicted category:", prediction.category)
-        evaluation_result = EvalResult(
-            case_id = test_case.id,
-            expected_category = test_case.expected_category,
-            predicted_category = prediction.category,
-            category_match = category_match,
-            predicted_summary = prediction.summary
+            print("Case ID:", result.case_id)
+            print("Expected category:", result.expected_category)
+            print("Predicted category:", result.predicted_category)
+        
+        print(
+            result.predicted_category,
+            result.predicted_summary
         )
-        results.append(evaluation_result)
-
-        print(prediction.category, prediction.summary)
 
     passed_count = 0
+
     for result in results:
         if result.category_match:
             passed_count += 1
