@@ -26,9 +26,29 @@ model_name = "llama3.2:3b"
 runs_directory = Path("runs")
 runs_directory.mkdir(exist_ok=True)
 
+
 timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 report_path = runs_directory / f"{prompt_config.version}_{timestamp}.json"
+
+existing_reports = [
+        report
+        for report in runs_directory.glob("v*_20*.json")
+        if report != report_path
+    ]
+
+
+existing_reports.sort(
+    key=lambda path: path.stat().st_mtime
+)
+
+
+previous_report_path = (
+    existing_reports[-1]
+    if existing_reports
+    else None
+)
+
 
 with dataset_path.open("r", encoding="utf-8") as file:
     dataset_data = json.load(file)
@@ -74,6 +94,19 @@ total_count = len(results)
 
 pass_rate = (passed_count / total_count) * 100
 
+previous_pass_rate = None
+pass_rate_change = None
+regression_detected = False
+
+if previous_report_path:
+    with previous_report_path.open("r", encoding="utf-8") as file:
+        previous_report_data = json.load(file)
+
+    
+    previous_pass_rate = previous_report_data["pass_rate"]
+    pass_rate_change = round(pass_rate - previous_pass_rate, 2)
+    regression_detected = pass_rate_change < 0
+
 report_data = {
     "timestamp": timestamp,
     "prompt_version": prompt_config.version,
@@ -81,6 +114,16 @@ report_data = {
     "total_cases": total_count,
     "passed_cases": passed_count,
     "pass_rate": round(pass_rate, 2),
+    "comparison": {
+        "previous_report": (
+            previous_report_path.name
+            if previous_report_path
+            else None
+        ),
+        "previous_pass_rate": previous_pass_rate,
+        "pass_rate_change": pass_rate_change,
+        "regression_detected": regression_detected
+    },
     "results": [
         result.model_dump()
         for result in results
@@ -98,3 +141,11 @@ print(prompt_config.feature_name)
 print(list(prompt_config.categories.keys()))
 print("Report saved:", report_path)
 
+if previous_report_path:
+    print("Previous report:", previous_report_path)
+else:
+    print("No previous report found.")
+
+print("Previous pass rate:", previous_pass_rate)
+print("Pass rate change:", pass_rate_change)
+print("Regression detected:", regression_detected)

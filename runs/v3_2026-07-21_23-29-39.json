@@ -1,0 +1,58 @@
+{
+  "timestamp": "2026-07-21_23-29-39",
+  "prompt_version": "v3",
+  "model": "llama3.2:3b",
+  "total_cases": 6,
+  "passed_cases": 6,
+  "pass_rate": 100.0,
+  "comparison": {
+    "previous_report": null,
+    "previous_pass_rate": null,
+    "pass_rate_change": null,
+    "regression_detected": false
+  },
+  "results": [
+    {
+      "case_id": "case_001",
+      "expected_category": "billing",
+      "predicted_category": "billing",
+      "category_match": true,
+      "predicted_summary": "The customer is inquiring about a discrepancy in their latest invoice and requests clarification on the charges."
+    },
+    {
+      "case_id": "case_002",
+      "expected_category": "technical",
+      "predicted_category": "technical",
+      "category_match": true,
+      "predicted_summary": "The customer is reporting intermittent internet connectivity issues and requests assistance in resolving the problem."
+    },
+    {
+      "case_id": "case_003",
+      "expected_category": "billing",
+      "predicted_category": "billing",
+      "category_match": true,
+      "predicted_summary": "The customer is requesting a refund due to damage and functionality issues with their recently purchased product."
+    },
+    {
+      "case_id": "case_004",
+      "expected_category": "account",
+      "predicted_category": "account",
+      "category_match": true,
+      "predicted_summary": "The customer is requesting assistance with updating their account information to resolve issues with accessing certain features."
+    },
+    {
+      "case_id": "case_005",
+      "expected_category": "general",
+      "predicted_category": "general",
+      "category_match": true,
+      "predicted_summary": "The customer is seeking general information about the company's services and support hours"
+    },
+    {
+      "case_id": "case_006",
+      "expected_category": "account",
+      "predicted_category": "account",
+      "category_match": true,
+      "predicted_summary": "The customer is experiencing trouble logging into their account and requests assistance with resetting their password and investigating an unexpected charge."
+    }
+  ]
+}
