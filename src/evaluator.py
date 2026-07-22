@@ -17,6 +17,31 @@ from .schemas import EvalResult, GoldenTestCase, PromptConfig
 from .llm_feature import classify_email
 
 
+def evaluate_cases(test_cases, system_prompt, classifier):
+    results = []
+
+    for test_case in test_cases:
+        prediction = classifier(
+            test_case.input,
+            system_prompt
+        )
+
+        category_match = (
+            prediction.category == test_case.expected_category
+        )
+
+        evaluation_result = EvalResult(
+            case_id=test_case.id,
+            expected_category=test_case.expected_category,
+            predicted_category=prediction.category,
+            category_match=category_match,
+            predicted_summary=prediction.summary
+        )
+
+        results.append(evaluation_result)
+
+    return results
+
 
 def main():
     dataset_path = Path("datasets/golden_dataset_v1.json")
