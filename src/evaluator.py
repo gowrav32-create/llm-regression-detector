@@ -1,5 +1,7 @@
 import json
 
+from datetime import datetime
+
 from pathlib import Path
 
 import yaml
@@ -16,6 +18,17 @@ with prompt_path.open("r", encoding="utf-8") as file:
     prompt_data = yaml.safe_load(file)
 
 prompt_config = PromptConfig(**prompt_data)
+
+
+model_name = "llama3.2:3b"
+
+
+runs_directory = Path("runs")
+runs_directory.mkdir(exist_ok=True)
+
+timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
+report_path = runs_directory / f"{prompt_config.version}_{timestamp}.json"
 
 with dataset_path.open("r", encoding="utf-8") as file:
     dataset_data = json.load(file)
@@ -61,11 +74,27 @@ total_count = len(results)
 
 pass_rate = (passed_count / total_count) * 100
 
+report_data = {
+    "timestamp": timestamp,
+    "prompt_version": prompt_config.version,
+    "model": model_name,
+    "total_cases": total_count,
+    "passed_cases": passed_count,
+    "pass_rate": round(pass_rate, 2),
+    "results": [
+        result.model_dump()
+        for result in results
+    ]
+}
+
+with report_path.open("w", encoding="utf-8") as file:
+    json.dump(report_data, file, indent=2)
+
 print(f"Passed: {passed_count}/{total_count}")
 print(f"Pass rate: {pass_rate:.2f}%")
-
 print(f"Stored {len(results)} evaluation results")
 print(prompt_config.version)
 print(prompt_config.feature_name)
 print(list(prompt_config.categories.keys()))
+print("Report saved:", report_path)
 
