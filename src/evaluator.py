@@ -1,3 +1,5 @@
+import sys
+
 import json
 
 import argparse
@@ -163,3 +165,9 @@ else:
 print("Previous pass rate:", previous_pass_rate)
 print("Pass rate change:", pass_rate_change)
 print("Regression detected:", regression_detected)
+
+if regression_detected: 
+    print("Evaluation failed: regression detected.")
+    sys.exit(1)
+
+print("Evaluation passed: no regression detected.")
