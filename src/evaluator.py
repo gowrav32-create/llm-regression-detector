@@ -82,7 +82,7 @@ def main():
 
     parser.add_argument(
         "--prompt",
-        default="prompts/prompt_v3.yaml",
+        default="prompts/prompt_v4.yaml",
         help="Path to the prompt YAML file."
     )
 
