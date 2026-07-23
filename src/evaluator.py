@@ -56,6 +56,12 @@ def main():
         help="Path to the prompt YAML file."
     )
 
+    parser.add_argument(
+        "--baseline",
+        default=None,
+        help="Optional path to a trusted baseline JSON report."
+    )
+
     args = parser.parse_args()
 
     prompt_path = Path(args.prompt)
@@ -77,23 +83,29 @@ def main():
 
     report_path = runs_directory / f"{prompt_config.version}_{timestamp}.json"
 
-    existing_reports = [
+    if args.baseline:
+        previous_report_path = Path(args.baseline)
+
+        if not previous_report_path.exists():
+            parser.error(
+                f"Baseline report not found: {previous_report_path}"
+            )
+    else:
+        existing_reports = [
             report
             for report in runs_directory.glob("v*_20*.json")
             if report != report_path
         ]
 
+        existing_reports.sort(
+            key=lambda report: report.stat().st_mtime
+        )
 
-    existing_reports.sort(
-        key=lambda path: path.stat().st_mtime
-    )
-
-
-    previous_report_path = (
-        existing_reports[-1]
-        if existing_reports
-        else None
-    )
+        previous_report_path = (
+            existing_reports[-1]
+            if existing_reports
+            else None
+        )
 
 
     with dataset_path.open("r", encoding="utf-8") as file:
