@@ -62,6 +62,14 @@
         "expected_summary": "TODO: Write one sentence summarizing that the customer primarily needs help with the application crash.",
         "difficulty": "hard",
         "notes": "Tests primary-intent selection when technical and billing details appear together."
+    },
+    {
+        "id": "case_009",
+        "input": "TODO: Write an email where the customer briefly mentions that the application sometimes freezes, but primarily asks for a refund for an incorrect subscription charge.",
+        "expected_category": "billing",
+        "expected_summary": "TODO: Write one sentence explaining that the customer primarily requests a refund for an incorrect charge.",
+        "difficulty": "hard",
+        "notes": "Tests primary-intent selection when billing and technical details appear together."
     }
 ]
        
