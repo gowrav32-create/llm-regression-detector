@@ -17,6 +17,36 @@ from .schemas import EvalResult, GoldenTestCase, PromptConfig
 from .llm_feature import classify_email
 
 
+def select_previous_report(
+    runs_directory: Path,
+    report_path: Path,
+    baseline: str | None
+) -> Path | None:
+    if baseline:
+        baseline_path = Path(baseline)
+
+        if not baseline_path.exists():
+            raise FileNotFoundError(
+                f"Baseline report not found: {baseline_path}"
+            )
+
+        return baseline_path
+
+    existing_reports = [
+        report
+        for report in runs_directory.glob("v*_20*.json")
+        if report != report_path
+    ]
+
+    existing_reports.sort(
+        key=lambda report: report.stat().st_mtime
+    )
+
+    if existing_reports:
+        return existing_reports[-1]
+
+    return None
+
 def evaluate_cases(test_cases, system_prompt, classifier):
     results = []
 
@@ -83,29 +113,14 @@ def main():
 
     report_path = runs_directory / f"{prompt_config.version}_{timestamp}.json"
 
-    if args.baseline:
-        previous_report_path = Path(args.baseline)
-
-        if not previous_report_path.exists():
-            parser.error(
-                f"Baseline report not found: {previous_report_path}"
-            )
-    else:
-        existing_reports = [
-            report
-            for report in runs_directory.glob("v*_20*.json")
-            if report != report_path
-        ]
-
-        existing_reports.sort(
-            key=lambda report: report.stat().st_mtime
+    try:
+        previous_report_path = select_previous_report(
+            runs_directory=runs_directory,
+            report_path=report_path,
+            baseline=args.baseline
         )
-
-        previous_report_path = (
-            existing_reports[-1]
-            if existing_reports
-            else None
-        )
+    except FileNotFoundError as error:
+        parser.error(str(error))
 
 
     with dataset_path.open("r", encoding="utf-8") as file:

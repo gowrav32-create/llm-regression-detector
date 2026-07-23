@@ -1,3 +1,5 @@
+import pytest
+
 from src import evaluator
 
 from src.schemas import GoldenTestCase, LLMOutput
@@ -36,3 +38,34 @@ def test_evaluate_cases_records_correct_match():
     assert results[0].predicted_category == "billing"
     assert results[0].category_match is True
 
+def test_select_previous_report_uses_explicit_baseline(tmp_path):
+    baseline_path = tmp_path / "trusted-baseline.json"
+    baseline_path.write_text(
+        '{"pass_rate": 100.0}',
+        encoding="utf-8"
+    )
+
+    current_report_path = tmp_path / "v4_2026-07-22_18-00-00.json"
+
+    selected_report = evaluator.select_previous_report(
+        runs_directory=tmp_path,
+        report_path=current_report_path,
+        baseline=str(baseline_path)
+    )
+
+    assert selected_report == baseline_path
+
+
+def test_select_previous_report_rejects_missing_baseline(tmp_path):
+    missing_baseline_path = tmp_path / "missing-report.json"
+    current_report_path = tmp_path / "v4_2026-07-22_18-00-00.json"
+
+    with pytest.raises(
+        FileNotFoundError,
+        match="Baseline report not found"
+    ):
+        evaluator.select_previous_report(
+            runs_directory=tmp_path,
+            report_path=current_report_path,
+            baseline=str(missing_baseline_path)
+        )
