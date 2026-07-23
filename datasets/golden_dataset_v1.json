@@ -46,6 +46,14 @@
         "expected_summary": "Primary: customer cannot log in to their account and requests assistance to regain access; secondary: customer reports an unexpected $49.99 charge and asks for investigation and refund.",
         "difficulty": "hard",
         "notes": "Account/login problem is the primary concern (blocking access to billing); also reports a potential unauthorized $49.99 charge that should be investigated."
+    },
+    {
+        "id": "case_007",
+        "input": "TODO: Write a customer email containing spelling mistakes about an application or internet connection repeatedly disconnecting.",
+        "expected_category": "technical",
+        "expected_summary": "TODO: Write one sentence summarizing the technical problem.",
+        "difficulty": "medium",
+        "notes": "Tests technical classification with spelling mistakes."
     }
 ]
        
