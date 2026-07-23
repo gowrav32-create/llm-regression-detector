@@ -54,6 +54,14 @@
         "expected_summary": "TODO: Write one sentence summarizing the technical problem.",
         "difficulty": "medium",
         "notes": "Tests technical classification with spelling mistakes."
+    },
+    {
+        "id": "case_008",
+        "input": "TODO: Write an email where the customer mentions being charged for the service, but mainly asks for help because the mobile application crashes whenever they open it.",
+        "expected_category": "technical",
+        "expected_summary": "TODO: Write one sentence summarizing that the customer primarily needs help with the application crash.",
+        "difficulty": "hard",
+        "notes": "Tests primary-intent selection when technical and billing details appear together."
     }
 ]
        
