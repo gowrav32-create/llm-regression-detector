@@ -15,6 +15,53 @@ def calculate_regression(
     return pass_rate_change, regression_detected
 
 
+def calculate_shared_case_pass_rates(
+        current_results: list[dict],
+        previous_results: list[dict]
+) -> tuple[float | None, float | None]:
+    previous_results_by_case = {
+        result["case_id"]: result["category_match"]
+        for result in previous_results
+    }
+
+    shared_current_results = []
+    shared_previous_results = []
+
+    for current_result in current_results:
+        case_id = current_result["case_id"]
+
+        if case_id not in previous_results_by_case:
+            continue
+
+        shared_current_results.append(
+            current_result["category_match"]
+        )
+
+        shared_previous_results.append(
+            previous_results_by_case[case_id]
+        )
+
+    if not shared_current_results:
+        return None, None
+
+    current_passed = sum(shared_current_results)
+    previous_passed = sum(shared_previous_results)
+    shared_case_count = len(shared_current_results)
+
+    current_pass_rate = round(
+        (current_passed / shared_case_count) * 100,
+        2
+    )
+
+
+    previous_pass_rate = round(
+        (previous_passed / shared_case_count) * 100,
+        2
+    )
+
+    return current_pass_rate, previous_pass_rate
+
+
 def find_case_regressions(
     current_results: list[dict],
     previous_results: list[dict]

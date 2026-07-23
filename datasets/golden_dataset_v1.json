@@ -78,6 +78,14 @@
         "expected_summary": "The customer needs help restoring access to their account.",
         "difficulty": "medium",
         "notes": "Tests account classification with short, informal, and misspelled text."
+    },
+    {
+        "id": "case_011",
+        "input": "Can you tell me if support is available on weekends and whether your service is offered in another country?",
+        "expected_category": "general",
+        "expected_summary": "The customer is asking for general service information, such as support hours and availability.",
+        "difficulty": "easy",
+        "notes": "Tests general informational questions that do not require billing, technical, or account action."
     }
 ]
        

@@ -1,4 +1,4 @@
-from src.regression import calculate_regression, find_case_regressions
+from src.regression import calculate_regression, calculate_shared_case_pass_rates, find_case_regressions
 
 
 def test_detects_regression():
@@ -82,3 +82,40 @@ def test_new_failing_case_is_not_a_regression():
     )
 
     assert regressions == []
+
+
+def test_shared_case_pass_rates_ignore_new_cases():
+    previous_results = [
+        {
+            "case_id": "case_001",
+            "category_match": True
+        },
+        {
+            "case_id": "case_002",
+            "category_match": True
+        }
+    ]
+
+    current_results = [
+        {
+            "case_id": "case_001",
+            "category_match": True
+        },
+        {
+            "case_id": "case_002",
+            "category_match": True
+        },
+        {
+            "case_id": "case_011",
+            "category_match": False
+        }
+    ]
+
+    current_rate, previous_rate = calculate_shared_case_pass_rates(
+        current_results=current_results,
+        previous_results=previous_results
+    )
+
+    assert current_rate == 100.0
+    assert previous_rate == 100.0
+    

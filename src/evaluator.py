@@ -4,7 +4,7 @@ import json
 
 import argparse
 
-from .regression import calculate_regression, find_case_regressions
+from .regression import calculate_regression, calculate_shared_case_pass_rates, find_case_regressions
 
 from datetime import datetime
 
@@ -167,7 +167,6 @@ def main():
 
     pass_rate = (passed_count / total_count) * 100
 
-    previous_pass_rate = None
     previous_results = []
 
 
@@ -175,18 +174,33 @@ def main():
         with previous_report_path.open("r", encoding="utf-8") as file:
             previous_report_data = json.load(file)
 
-        previous_pass_rate = previous_report_data["pass_rate"]
         previous_results = previous_report_data.get("results", [])
-        
-    pass_rate_change, aggregate_regression_detected = calculate_regression(
-        current_pass_rate=pass_rate,
-        previous_pass_rate=previous_pass_rate
-    )
 
     current_results = [
         result.model_dump()
         for result in results
     ]
+
+    shared_current_pass_rate, shared_previous_pass_rate = (
+        calculate_shared_case_pass_rates(
+            current_results=current_results,
+            previous_results=previous_results
+        )
+    )
+
+    if (
+        shared_current_pass_rate is None
+        or shared_previous_pass_rate is None
+    ):
+        pass_rate_change = None
+        aggregate_regression_detected = False
+    else:
+        pass_rate_change, aggregate_regression_detected = (
+            calculate_regression(
+                current_pass_rate=shared_current_pass_rate,
+                previous_pass_rate=shared_previous_pass_rate
+            )
+        )
 
     case_regressions = find_case_regressions(
         current_results=current_results,
@@ -211,7 +225,8 @@ def main():
                 if previous_report_path
                 else None
             ),
-            "previous_pass_rate": previous_pass_rate,
+            "shared_current_pass_rate": shared_current_pass_rate,
+            "shared_previous_pass_rate": shared_previous_pass_rate,
             "pass_rate_change": pass_rate_change,
             "aggregate_regression_detected": aggregate_regression_detected,
             "case_regressions": case_regressions,
@@ -236,7 +251,8 @@ def main():
     else:
         print("No previous report found.")
 
-    print("Previous pass rate:", previous_pass_rate)
+    print("Shared current pass rate:", shared_current_pass_rate)
+    print("Shared previous pass rate:", shared_previous_pass_rate)
     print("Pass rate change:", pass_rate_change)
     print("Case regressions:", case_regressions)
     print("Regression detected:", regression_detected)
