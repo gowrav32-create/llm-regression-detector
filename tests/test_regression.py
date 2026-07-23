@@ -1,4 +1,4 @@
-from src.regression import calculate_regression
+from src.regression import calculate_regression, find_case_regressions
 
 
 def test_detects_regression():
@@ -24,4 +24,34 @@ def test_handles_missing_previous_run():
     assert change is None
     assert detected is False
 
-    
+
+def test_finds_case_level_regression():
+    previous_results = [
+        {
+            "case_id": "case_001",
+            "category_match": True
+        },
+        {
+            "case_id": "case_002",
+            "category_match": True
+        }
+    ]
+
+    current_results = [
+        {
+            "case_id": "case_001",
+            "category_match": True
+        },
+        {
+            "case_id": "case_002",
+            "category_match": False
+        }
+    ]
+
+    regressions = find_case_regressions(
+        current_results=current_results,
+        previous_results=previous_results
+    )
+
+
+    assert regressions == ["case_002"]

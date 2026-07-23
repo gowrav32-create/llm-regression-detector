@@ -4,7 +4,7 @@ import json
 
 import argparse
 
-from .regression import calculate_regression
+from .regression import calculate_regression, find_case_regressions
 
 from datetime import datetime
 
@@ -141,6 +141,7 @@ def main():
     pass_rate = (passed_count / total_count) * 100
 
     previous_pass_rate = None
+    previous_results = []
 
 
     if previous_report_path:
@@ -148,10 +149,26 @@ def main():
             previous_report_data = json.load(file)
 
         previous_pass_rate = previous_report_data["pass_rate"]
+        previous_results = previous_report_data.get("results", [])
         
-    pass_rate_change, regression_detected = calculate_regression(
+    pass_rate_change, aggregate_regression_detected = calculate_regression(
         current_pass_rate=pass_rate,
         previous_pass_rate=previous_pass_rate
+    )
+
+    current_results = [
+        result.model_dump()
+        for result in results
+    ]
+
+    case_regressions = find_case_regressions(
+        current_results=current_results,
+        previous_results=previous_results
+    )
+
+    regression_detected = (
+        aggregate_regression_detected
+        or bool(case_regressions)
     )
 
     report_data = {
@@ -169,12 +186,11 @@ def main():
             ),
             "previous_pass_rate": previous_pass_rate,
             "pass_rate_change": pass_rate_change,
+            "aggregate_regression_detected": aggregate_regression_detected,
+            "case_regressions": case_regressions,
             "regression_detected": regression_detected
         },
-        "results": [
-            result.model_dump()
-            for result in results
-        ]
+        "results": current_results
     }
 
     with report_path.open("w", encoding="utf-8") as file:
@@ -195,6 +211,7 @@ def main():
 
     print("Previous pass rate:", previous_pass_rate)
     print("Pass rate change:", pass_rate_change)
+    print("Case regressions:", case_regressions)
     print("Regression detected:", regression_detected)
 
     if regression_detected: 
