@@ -55,3 +55,30 @@ def test_finds_case_level_regression():
 
 
     assert regressions == ["case_002"]
+
+
+def test_new_failing_case_is_not_a_regression():
+    previous_results = [
+        {
+            "case_id": "case_001",
+            "category_match": True
+        }
+    ]
+
+    current_results = [
+        {
+            "case_id": "case_001",
+            "category_match": True
+        },
+        {
+            "case_id": "case_011",
+            "category_match": False
+        }
+    ]
+
+    regressions = find_case_regressions(
+        current_results=current_results,
+        previous_results=previous_results
+    )
+
+    assert regressions == []

@@ -24,16 +24,17 @@ def find_case_regressions(
         for result in previous_results
     }
 
-
     regressions = []
 
     for current_result in current_results:
         case_id = current_result["case_id"]
 
+        if case_id not in previous_results_by_case:
+            continue
 
-        previously_passed = {
-            previous_results_by_case.get(case_id) is True
-        }
+        previously_passed = (
+            previous_results_by_case[case_id] is True
+        )
 
         currently_failed = (
             current_result["category_match"] is False
@@ -41,6 +42,5 @@ def find_case_regressions(
 
         if previously_passed and currently_failed:
             regressions.append(case_id)
-
 
     return regressions
