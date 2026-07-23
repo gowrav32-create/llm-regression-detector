@@ -49,27 +49,35 @@
     },
     {
         "id": "case_007",
-        "input": "TODO: Write a customer email containing spelling mistakes about an application or internet connection repeatedly disconnecting.",
+        "input": "My app keeps disconnecting because the internet connection keeps dropping repeatedly.",
         "expected_category": "technical",
-        "expected_summary": "TODO: Write one sentence summarizing the technical problem.",
+        "expected_summary": "The application keeps disconnecting because the internet connection is repeatedly dropping.",
         "difficulty": "medium",
         "notes": "Tests technical classification with spelling mistakes."
     },
     {
         "id": "case_008",
-        "input": "TODO: Write an email where the customer mentions being charged for the service, but mainly asks for help because the mobile application crashes whenever they open it.",
+        "input": "The customer was charged for the service but is primarily asking for help because the mobile application crashes whenever they open it.",
         "expected_category": "technical",
-        "expected_summary": "TODO: Write one sentence summarizing that the customer primarily needs help with the application crash.",
+        "expected_summary": "The customer primarily needs help because the mobile application crashes whenever they open it.",
         "difficulty": "hard",
         "notes": "Tests primary-intent selection when technical and billing details appear together."
     },
     {
         "id": "case_009",
-        "input": "TODO: Write an email where the customer briefly mentions that the application sometimes freezes, but primarily asks for a refund for an incorrect subscription charge.",
+        "input": "The customer briefly mentions the app sometimes freezes but is primarily requesting a refund for an incorrect subscription charge.",
         "expected_category": "billing",
-        "expected_summary": "TODO: Write one sentence explaining that the customer primarily requests a refund for an incorrect charge.",
+        "expected_summary": "The customer is primarily requesting a refund for an incorrect subscription charge.",
         "difficulty": "hard",
         "notes": "Tests primary-intent selection when billing and technical details appear together."
+    },
+    {
+        "id": "case_010",
+        "input": "Hey, I changed my phone nummer and now I cant log in to the app.",
+        "expected_category": "account",
+        "expected_summary": "The customer needs help restoring access to their account.",
+        "difficulty": "medium",
+        "notes": "Tests account classification with short, informal, and misspelled text."
     }
 ]
        
